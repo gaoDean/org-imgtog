@@ -4,6 +4,8 @@ Automatic inline image toggling as the cursor enters and exits them, similar to 
 ** About
 Org mode supports inline image previews. These are annoying to edit, since you either have to blindly press delete on the image and hope that destroys the inline image preview, or toggle the entire file. ~org-imgtog~ provides the functionality to toggle just the one you're editing when your cursor goes on it.
 
+[[https://user-images.githubusercontent.com/97860672/232382689-afce91ee-2219-4f42-89e4-d2e525e72a33.mp4]]
+
 ** Install
 *** use-package
 #+begin_src elisp
