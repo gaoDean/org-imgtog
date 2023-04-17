@@ -10,7 +10,7 @@ Org mode supports inline image previews. These are annoying to edit, since you e
 *** use-package
 #+begin_src elisp
   (use-package org-imgtog
-    :straight '(org-imgtog :type git :host "github" :repo "gaoDean/org-imgtog")
+    :straight (org-imgtog :type git :host github :repo "gaoDean/org-imgtog")
     :hook org-mode)
 #+end_src
 
