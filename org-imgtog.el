@@ -35,6 +35,23 @@
 (require 'org)
 (require 'org-element)
 
+(defgroup org-imgtog nil
+  "Auto toggle inline images in org-mode."
+  :group 'org)
+
+(defcustom org-imgtog-preview-delay 0.5
+  "Seconds of delay before image is toggled."
+  :group 'org-imgtog
+  :type 'number)
+
+(defcustom org-imgtog-preview-delay-only-remote t
+  "Only apply preview delay to remote inline images.
+If nil, apply to all images.
+This helps because remote images are fetched every time the image is shown and
+binds up emacs."
+  :group 'org-imgtog
+  :type 'boolean)
+
 (defvar-local org-imgtog--prev-hidden-img-elem nil
   "The previous image that was hidden")
 
@@ -53,6 +70,15 @@ and shown after your cursor leaves."
   (if org-imgtog-mode
       (add-hook 'post-command-hook #'org-imgtog--post-cmd nil t)
     (remove-hook 'post-command-hook #'org-imgtog--post-cmd t)))
+
+(defun org-imgtog--remote-image-p ()
+  "Check if the point is on a remote image."
+  (let ((elem (org-element-context))
+        (image-file-regex (image-file-name-regexp)))
+    (and (eq (car elem) 'link)
+         (or (string= (org-element-property :type elem) "http")
+             (string= (org-element-property :type elem) "https"))
+         (string-match-p image-file-regex (org-element-property :path elem)))))
 
 (defun org-imgtog--on-image-p ()
   "Check if the point is on an image. Returns element context"
@@ -75,8 +101,9 @@ and shown after your cursor leaves."
   "Hide the image at point"
   (setq org-imgtog--prev-hidden-img-elem elem)
 
-  (let ((start-end (org-imgtog--img-point elem)))
-    (org-remove-inline-images (car start-end) (cdr start-end))))
+  (when (not (xor (> org-imgtog-preview-delay 0) (org-imgtog--on-image-p)))
+    (let ((start-end (org-imgtog--img-point elem)))
+      (org-remove-inline-images (car start-end) (cdr start-end)))))
 
 (defun org-imgtog--show-img (elem)
   "Show the image at point"
@@ -85,6 +112,12 @@ and shown after your cursor leaves."
   (let ((start-end (org-imgtog--img-point elem)))
     (org-display-inline-images nil nil (car start-end) (cdr start-end))))
 
+(defun org-imgtog--hide-img-with-delay (elem)
+  (run-with-timer org-imgtog-preview-delay
+                  nil
+                  #'org-imgtog--hide-img
+                  elem))
+  
 (defun org-imgtog--post-cmd ()
   "Runs after `post-command-hook`. Handles toggling.
 Image hidden and cursor not on image -> show image
@@ -92,8 +125,21 @@ Image not hidden and cursor on image -> hide image"
   (let ((hidden-img org-imgtog--prev-hidden-img-elem) ;; is there a hidden image
         (cursor-on-img (org-imgtog--on-image-p))) ;; is cursor on image
 
-    (when (and hidden-img (not cursor-on-img)) (org-imgtog--show-img hidden-img))
-    (when (and cursor-on-img (not hidden-img)) (org-imgtog--hide-img cursor-on-img))))
+    (when (and hidden-img (not cursor-on-img))
+      (org-imgtog--show-img hidden-img))
+
+    (when (and cursor-on-img (not hidden-img))
+      (cond ((and
+              (> org-imgtog-preview-delay 0)
+              org-imgtog-preview-delay-only-remote
+              (org-imgtog--remote-image-p))
+             (org-imgtog--hide-img-with-delay cursor-on-img))
+            ((and
+              (> org-imgtog-preview-delay 0)
+              (not org-imgtog-preview-delay-only-remote))
+             (org-imgtog--hide-img-with-delay cursor-on-img))
+            (t (org-imgtog--hide-img cursor-on-img))))))
+             
 
 (provide 'org-imgtog)
 

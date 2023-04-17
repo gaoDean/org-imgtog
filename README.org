@@ -11,7 +11,10 @@ Org mode supports inline image previews. These are annoying to edit, since you e
 #+begin_src elisp
   (use-package org-imgtog
     :straight (org-imgtog :type git :host github :repo "gaoDean/org-imgtog")
-    :hook org-mode)
+    :hook org-mode
+    :config
+    (setq org-imgtog-preview-delay 0.5) ;; wait 0.5 seconds before toggling
+    (setq org-imgtog-preview-delay-only-remote t)) ;; only delay for remote images
 #+end_src
 
 *** Manual
