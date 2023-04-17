@@ -1,0 +1,22 @@
+#+title: org-imgtog
+
+* org-imgtog
+Automatic inline image toggling as the cursor enters and exits them, similar to [[https://github.com/io12/org-fragtog][org-fragtog]]. 
+
+** About
+Org mode supports inline image previews. These are annoying to edit, since you either have to blindly press delete on the image and hope that destroys the inline image preview, or toggle the entire file. ~org-imgtog~ provides the functionality to toggle just the one you're editing when your cursor goes on it.
+
+** Install
+*** use-package
+#+begin_src elisp
+  (use-package org-imgtog
+    :straight '(org-imgtog :type git :host "github" :repo "gaoDean/org-imgtog")
+    :hook org-mode)
+#+end_src
+
+*** Manual
+#+begin_src elisp
+  (add-to-list 'load "/path/to/plugin/")
+  (add-hook 'org-mode-hook 'org-imgtog-mode)
+#+end_src
+
