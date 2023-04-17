@@ -16,7 +16,7 @@ Org mode supports inline image previews. These are annoying to edit, since you e
 
 *** Manual
 #+begin_src elisp
-  (add-to-list 'load "/path/to/plugin/")
+  (add-to-list 'load-path "/path/to/plugin/")
   (add-hook 'org-mode-hook 'org-imgtog-mode)
 #+end_src
 
