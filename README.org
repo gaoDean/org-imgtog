@@ -1,5 +1,3 @@
-#+title: org-imgtog
-
 * org-imgtog
 Automatic inline image toggling as the cursor enters and exits them, similar to [[https://github.com/io12/org-fragtog][org-fragtog]]. 
 
