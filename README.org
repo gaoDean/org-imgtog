@@ -11,10 +11,7 @@ Org mode supports inline image previews. These are annoying to edit, since you e
 #+begin_src elisp
   (use-package org-imgtog
     :straight (org-imgtog :type git :host github :repo "gaoDean/org-imgtog")
-    :hook org-mode
-    :config
-    (setq org-imgtog-preview-delay 0.5) ;; wait 0.5 seconds before toggling
-    (setq org-imgtog-preview-delay-only-remote t)) ;; only delay for remote images
+    :hook org-mode)
 #+end_src
 
 *** Manual
@@ -23,3 +20,9 @@ Org mode supports inline image previews. These are annoying to edit, since you e
   (add-hook 'org-mode-hook 'org-imgtog-mode)
 #+end_src
 
+*** For users of Doom Emacs (or the Doom Emacs remote image patch)
+It would be benificial to add the following as the image would be fetched every time it is hidden. This is not the case with [[https://github.com/gaoDean/org-remoteimg][org-remoteimg]], which is basically the remote image patch but with caching.
+#+begin_src elisp
+  (setq org-imgtog-preview-delay 0.5) ;; wait 0.5 seconds before toggling
+  (setq org-imgtog-preview-delay-only-remote t)) ;; only delay for remote images
+#+end_src

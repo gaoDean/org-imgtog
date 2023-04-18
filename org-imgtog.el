@@ -39,16 +39,17 @@
   "Auto toggle inline images in org-mode."
   :group 'org)
 
-(defcustom org-imgtog-preview-delay 0.5
+(defcustom org-imgtog-preview-delay 0.0
   "Seconds of delay before image is toggled."
   :group 'org-imgtog
   :type 'number)
 
-(defcustom org-imgtog-preview-delay-only-remote t
+(defcustom org-imgtog-preview-delay-only-remote nil
   "Only apply preview delay to remote inline images.
 If nil, apply to all images.
-This helps because remote images are fetched every time the image is shown and
-binds up emacs."
+This is for users of the Doom emacs remote inline
+image patch. For my plugin org-remoteimg, this is
+not needed as the image is cached."
   :group 'org-imgtog
   :type 'boolean)
 
