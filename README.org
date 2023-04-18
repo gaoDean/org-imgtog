@@ -17,6 +17,7 @@ Org mode supports inline image previews. These are annoying to edit, since you e
 *** Manual
 #+begin_src elisp
   (add-to-list 'load-path "/path/to/plugin/")
+  (require 'org-imgtog)
   (add-hook 'org-mode-hook 'org-imgtog-mode)
 #+end_src
 
@@ -24,5 +25,5 @@ Org mode supports inline image previews. These are annoying to edit, since you e
 It would be benificial to add the following as the image would be fetched every time it is hidden. This is not the case with [[https://github.com/gaoDean/org-remoteimg][org-remoteimg]], which is basically the remote image patch but with caching.
 #+begin_src elisp
   (setq org-imgtog-preview-delay 0.5) ;; wait 0.5 seconds before toggling
-  (setq org-imgtog-preview-delay-only-remote t)) ;; only delay for remote images
+  (setq org-imgtog-preview-delay-only-remote t) ;; only delay for remote images
 #+end_src
