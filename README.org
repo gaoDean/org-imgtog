@@ -2,7 +2,7 @@
 Automatic inline image toggling as the cursor enters and exits them, similar to [[https://github.com/io12/org-fragtog][org-fragtog]]. 
 
 ** About
-Org mode supports inline image previews. These are annoying to edit, since you either have to blindly press delete on the image and hope that destroys the inline image preview, or toggle the entire file. ~org-imgtog~ provides the functionality to toggle just the one you're editing when your cursor goes on it.
+Org mode supports inline image previews. These are annoying to edit, since you either have to blindly press delete on the image and hope that destroys the inline image preview, or toggle the entire file. ~org-imgtog~ provides the functionality to toggle just the one you're editing when your cursor goes on it. 
 
 [[https://user-images.githubusercontent.com/97860672/232382689-afce91ee-2219-4f42-89e4-d2e525e72a33.mp4]]
 
@@ -21,8 +21,9 @@ Org mode supports inline image previews. These are annoying to edit, since you e
   (add-hook 'org-mode-hook 'org-imgtog-mode)
 #+end_src
 
-*** For users of Doom Emacs (or the Doom Emacs remote image patch)
-It would be benificial to add the following as the image would be fetched every time it is hidden. This is not the case with [[https://github.com/gaoDean/org-remoteimg][org-remoteimg]], which is basically the remote image patch but with caching.
+*** For users of remote inline images
+This is only for users who do not turn on caching. To turn on caching, just set the variable ~url-automatic-caching~ to true. If not, it would be benificial to add the following as the image would be fetched every time it is hidden.
+
 #+begin_src elisp
   (setq org-imgtog-preview-delay 0.5) ;; wait 0.5 seconds before toggling
   (setq org-imgtog-preview-delay-only-remote t) ;; only delay for remote images

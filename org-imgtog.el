@@ -47,9 +47,8 @@
 (defcustom org-imgtog-preview-delay-only-remote nil
   "Only apply preview delay to remote inline images.
 If nil, apply to all images.
-This is for users of the Doom emacs remote inline
-image patch. For my plugin org-remoteimg, this is
-not needed as the image is cached."
+This is for users of the remote inline images
+who do not turn on caching."
   :group 'org-imgtog
   :type 'boolean)
 
