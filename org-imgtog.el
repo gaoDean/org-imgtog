@@ -102,7 +102,10 @@ and shown after your cursor leaves."
   "Hide the image at point"
   (setq org-imgtog--prev-hidden-img-elem elem)
 
-  (when (not (xor (> org-imgtog-preview-delay 0) (org-imgtog--on-image-p)))
+  (if (> org-imgtog-preview-delay 0)
+      (when (org-imgtog--on-image-p)
+        (let ((start-end (org-imgtog--img-point elem)))
+          (org-remove-inline-images (car start-end) (cdr start-end))))
     (let ((start-end (org-imgtog--img-point elem)))
       (org-remove-inline-images (car start-end) (cdr start-end)))))
 
